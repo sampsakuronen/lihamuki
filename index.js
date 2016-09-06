@@ -59,7 +59,4 @@ const Lihamuki = React.createClass({
   }
 })
 
-ReactDOM.render(
-  <Lihamuki users={users}/>,
-  document.getElementById('content')
-)
+ReactDOM.render(<Lihamuki users={users}/>, document.getElementById('content'))
