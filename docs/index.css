@@ -7,6 +7,7 @@ html, body {
   padding: 0;
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  font-size: 30px;
   text-transform: uppercase;
 }
 
@@ -58,7 +59,6 @@ html, body {
 
 .raw.button:before {
   content: "raw";
-  font-size: 24px;
 }
 
 .users {
@@ -76,7 +76,6 @@ html, body {
   align-items: center;
   justify-content: flex-start;
   padding-left: 24px;
-  font-size: 30px;
   font-weight: 700;
   width: 40%;
   background-color: #E9FFFA;
