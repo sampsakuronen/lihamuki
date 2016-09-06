@@ -1,7 +1,8 @@
 const users = ['jakub', 'sampsa', 'antti']
 
-const initialState = localStorage.getItem('stats') || {}
+const initialState = {}
 initialState.selectedUser = users[0]
+initialState.stats = localStorage.getItem('stats') || {}
 
 const event$ = Bacon.Bus()
 
@@ -42,10 +43,18 @@ const Lihamuki = React.createClass({
   },
   render: function() {
     const pushButtonClick = colour => event$.push({ type: 'buttonClick', value: colour })
+    const toUserElement = user => (
+      <User
+        key={user}
+        user={user}
+        selected={user === this.state.selectedUser}
+        stats={this.state.stats[user]}
+      />
+    )
     return (
       <section className="content">
         <section className="users">
-          { R.map(user => <User key={user} user={user} selected={user === this.state.selectedUser}/>, this.props.users) }
+          { R.map(toUserElement, this.props.users) }
         </section>
         <section className="buttons">
           <Button colour='green' onClick={pushButtonClick} />
