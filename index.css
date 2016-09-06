@@ -3,6 +3,9 @@ html, body {
   margin: 0;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
 }
 
 .buttons {
@@ -39,3 +42,9 @@ html, body {
   font-size: 24px;
   font-weight: 700;
 }
+
+.people {
+  background-color: gray;
+  flex: 1;
+}
+
