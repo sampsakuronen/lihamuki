@@ -1,8 +1,6 @@
-const colours = ['green', 'blue', 'yellow', 'red', 'raw']
-
-const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
-
 const users = ['jakub', 'sampsa', 'antti']
+const colours = ['green', 'blue', 'yellow', 'red', 'raw']
+const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
 
 const initialState = {}
 initialState.selectedUser = users[0]
@@ -57,9 +55,9 @@ const User = React.createClass({
     const stats = this.props.stats || {}
     const total = R.sum(R.values(stats))
     const toStatElement = c => {
-      return stats[c] !== undefined
-      ? <Stat key={c} colour={c} number={stats[c]}/>
-      : undefined
+      return (stats[c] === undefined || stats[c] === 0)
+      ? undefined
+      : <Stat key={c} colour={c} number={stats[c]}/>
     }
     const statElements = R.map(toStatElement, colours)
     const statElementsWithTotal = total !== 0
