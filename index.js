@@ -22,6 +22,8 @@ const state$ = Bacon.update(initialState,
   }
 )
 
+state$.map('.stats').skipDuplicates().onValue(s => localStorage.setItem('stats', s))
+
 const Button = React.createClass({
   render: function() {
     return <div
