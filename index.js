@@ -4,21 +4,11 @@ const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
 
 const initialState = {}
 initialState.selectedUser = users[0]
-initialState.stats = localStorage.getItem('stats') || {
-  jakub: {
-    green: 1,
-    blue: 2,
-    yellow: 3,
-    red: 4,
-    raw: 5
-  }
-}
+initialState.stats = localStorage.getItem('stats') || {}
 
 const event$ = Bacon.Bus()
 const userClick$ = event$.filter(e => e.type === 'userClick')
 const buttonClick$ = event$.filter(e => e.type === 'buttonClick')
-
-event$.log('event')
 
 const state$ = Bacon.update(initialState,
   userClick$, (state, c) => R.assoc('selectedUser', c.value, state),
@@ -31,8 +21,6 @@ const state$ = Bacon.update(initialState,
     return R.over(R.lensPath(['stats', user, colour]), R.inc, state)
   }
 )
-
-state$.log('state')
 
 const Button = React.createClass({
   render: function() {
