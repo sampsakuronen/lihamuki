@@ -1,6 +1,17 @@
+const users = ['jakub', 'sampsa', 'antti']
+
+const initialState = localStorage.getItem('stats') || {}
+initialState.currentUser = users[0]
+
 const event$ = Bacon.Bus()
 
-event$.log()
+event$.log('event')
+
+const state$ = Bacon.update(initialState,
+  event$, (e, state) => state
+)
+
+state$.log('state')
 
 const Button = React.createClass({
   render: function() {
@@ -13,7 +24,10 @@ const Button = React.createClass({
 
 const Lihamuki = React.createClass({
   getInitialState: function() {
-    return {}
+    return initialState
+  },
+  componentDidMount: function() {
+    state$.onValue(nextState => this.setState(nextState))
   },
   render: function() {
     const pushButtonClick = colour => event$.push({ type: 'buttonClick', value: colour })
@@ -32,6 +46,6 @@ const Lihamuki = React.createClass({
 })
 
 ReactDOM.render(
-  <Lihamuki />,
+  <Lihamuki users={users}/>,
   document.getElementById('content')
 )
