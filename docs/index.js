@@ -4,7 +4,7 @@ const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
 
 const initialState = {}
 initialState.selectedUser = users[0]
-initialState.stats = localStorage.getItem('stats') || {}
+initialState.stats = JSON.parse(localStorage.getItem('stats')) || {}
 
 const event$ = Bacon.Bus()
 const userClick$ = event$.filter(e => e.type === 'userClick')
@@ -22,7 +22,7 @@ const state$ = Bacon.update(initialState,
   }
 )
 
-state$.map('.stats').skipDuplicates().onValue(s => localStorage.setItem('stats', s))
+state$.map('.stats').skipDuplicates().onValue(s => localStorage.setItem('stats', JSON.stringify(s)))
 
 const Button = React.createClass({
   render: function() {
