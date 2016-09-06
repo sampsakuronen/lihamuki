@@ -44,16 +44,20 @@ const User = React.createClass({
     const nameClasses = 'name ' + (this.props.selected ? 'selected' : '')
     const stats = this.props.stats || {}
     const total = R.sum(R.values(stats))
+    const toStatElement = c => {
+      return stats[c] !== undefined
+      ? <Stat key={c} colour={c} number={stats[c]}/>
+      : undefined
+    }
+    const statElements = R.map(toStatElement, colours)
+    const statElementsWithTotal = total !== 0
+      ? R.append((<Stat key='total' colour='total' number={total}/>), statElements)
+      : statElements
     return (
       <div className='user'>
         <div className={nameClasses}>{'big ' + this.props.user}</div>
         <div className='stats'>
-        { stats.green ? <Stat colour='green' number={stats.green}/> : undefined }
-        { stats.blue ? <Stat colour='blue' number={stats.blue}/> : undefined }
-        { stats.yellow ? <Stat colour='yellow' number={stats.yellow}/> : undefined }
-        { stats.red ? <Stat colour='red' number={stats.red}/> : undefined }
-        { stats.raw ? <Stat colour='raw' number={stats.raw}/> : undefined }
-        { total !== 0 ? <Stat colour='total' number={total}/> : undefined }
+          { statElementsWithTotal }
         </div>
       </div>
     )
