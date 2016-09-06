@@ -2,7 +2,15 @@ const users = ['jakub', 'sampsa', 'antti']
 
 const initialState = {}
 initialState.selectedUser = users[0]
-initialState.stats = localStorage.getItem('stats') || {}
+initialState.stats = localStorage.getItem('stats') || {
+  jakub: {
+    green: 1,
+    blue: 2,
+    yellow: 3,
+    red: 4,
+    raw: 5
+  }
+}
 
 const event$ = Bacon.Bus()
 
@@ -29,6 +37,8 @@ const User = React.createClass({
     return (
       <div className='user'>
         <div className={nameClasses}>{this.props.user}</div>
+        <div className='stats'>
+        </div>
       </div>
     )
   }
