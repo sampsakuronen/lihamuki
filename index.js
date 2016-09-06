@@ -33,8 +33,6 @@ const User = React.createClass({
   }
 })
 
-
-
 const Lihamuki = React.createClass({
   getInitialState: function() {
     return initialState
