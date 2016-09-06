@@ -8,7 +8,7 @@ const event$ = Bacon.Bus()
 event$.log('event')
 
 const state$ = Bacon.update(initialState,
-  event$, (e, state) => state
+  event$, (state, e) => state
 )
 
 state$.log('state')
@@ -45,16 +45,16 @@ const Lihamuki = React.createClass({
   render: function() {
     const pushButtonClick = colour => event$.push({ type: 'buttonClick', value: colour })
     return (
-      <section>
+      <section className="content">
+        <section className="users">
+          { R.map(user => <User key={user} user={user} selected={user === this.state.selectedUser}/>, this.props.users) }
+        </section>
         <section className="buttons">
           <Button colour='green' onClick={pushButtonClick} />
           <Button colour='blue' onClick={pushButtonClick} />
           <Button colour='yellow' onClick={pushButtonClick} />
           <Button colour='red' onClick={pushButtonClick} />
           <Button colour='raw' onClick={pushButtonClick} />
-        </section>
-        <section className="users">
-          { R.map(user => <User key={user} user={user} selected={user === this.state.selectedUser}/>, this.props.users) }
         </section>
       </section>
     )

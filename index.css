@@ -3,13 +3,17 @@
 }
 
 html, body {
+  height: 100%;
   padding: 0;
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  height: 100%;
+  text-transform: uppercase;
+}
+
+.content {
   display: flex;
   flex-flow: column;
-  text-transform: uppercase;
+  height: 100%;
 }
 
 .buttons {
@@ -42,17 +46,14 @@ html, body {
 
 .raw {
   background-color: #D8D8D8;
-}
-
-.total {
-  text-decoration: underline;
-}
-
-.raw {
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
+}
+
+.total {
+  text-decoration: underline;
 }
 
 .raw.button:before {
@@ -62,15 +63,12 @@ html, body {
 
 .users {
   flex: 1;
+  overflow-x: auto;
 }
 
 .user {
   display: flex;
   flex-direction: row;
-}
-
-.user:first-child {
-  margin-top: 24px
 }
 
 .name {
