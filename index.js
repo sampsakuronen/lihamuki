@@ -1,3 +1,5 @@
+const colours = ['green', 'blue', 'yellow', 'red', 'raw']
+
 const users = ['jakub', 'sampsa', 'antti']
 
 const initialState = {}
@@ -81,11 +83,7 @@ const Lihamuki = React.createClass({
           { R.map(toUserElement, this.props.users) }
         </section>
         <section className="buttons">
-          <Button colour='green' onClick={pushButtonClick} />
-          <Button colour='blue' onClick={pushButtonClick} />
-          <Button colour='yellow' onClick={pushButtonClick} />
-          <Button colour='red' onClick={pushButtonClick} />
-          <Button colour='raw' onClick={pushButtonClick} />
+          { R.map(c => <Button key={c} colour={c} onClick={pushButtonClick} />, colours) }
         </section>
       </section>
     )
