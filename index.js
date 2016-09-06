@@ -44,7 +44,7 @@ const User = React.createClass({
     const total = R.sum(R.values(stats))
     return (
       <div className='user'>
-        <div className={nameClasses}>{this.props.user}</div>
+        <div className={nameClasses}>{'big ' + this.props.user}</div>
         <div className='stats'>
         { stats.green ? <Stat colour='green' number={stats.green}/> : undefined }
         { stats.blue ? <Stat colour='blue' number={stats.blue}/> : undefined }
