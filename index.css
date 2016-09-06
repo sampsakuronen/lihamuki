@@ -104,7 +104,7 @@ html, body {
   align-items: center;
   justify-content: center;
   height: 48px;
-  width: 48px;
   margin-right: 8px;
   border-radius: 4px;
+  padding: 0 12px;
 }
