@@ -51,7 +51,7 @@ const User = React.createClass({
     }
     const statElements = R.map(toStatElement, colours)
     const statElementsWithTotal = total !== 0
-      ? R.append((<Stat key='total' colour='total' number={total}/>), statElements)
+      ? R.prepend((<Stat key='total' colour='total' number={total}/>), statElements)
       : statElements
     return (
       <div className='user' onClick={() => this.props.onClick(this.props.user)}>

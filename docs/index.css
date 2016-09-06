@@ -54,7 +54,7 @@ html, body {
 }
 
 .total {
-  text-decoration: underline;
+  font-size: 42px;
 }
 
 .raw.button:before {
