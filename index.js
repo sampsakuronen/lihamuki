@@ -1,3 +1,9 @@
+const Button = React.createClass({
+  render: function() {
+    return <div className={ 'button ' + this.props.colour }/>
+  }
+})
+
 const Lihamuki = React.createClass({
   getInitialState: function() {
     return {}
@@ -6,11 +12,11 @@ const Lihamuki = React.createClass({
     return (
       <body>
         <section className="buttons">
-          <div className="button green"></div>
-          <div className="button blue"></div>
-          <div className="button yellow"></div>
-          <div className="button red"></div>
-          <div className="button raw"></div>
+          <Button colour='green'/>
+          <Button colour='blue'/>
+          <Button colour='yellow'/>
+          <Button colour='red'/>
+          <Button colour='raw'/>
         </section>
       </body>
     )
