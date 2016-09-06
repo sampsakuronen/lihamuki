@@ -48,12 +48,16 @@ html, body {
   text-decoration: underline;
 }
 
-.rawButton {
+.raw {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
   font-weight: 700;
+}
+
+.raw:before {
+  content: "raw";
 }
 
 .users {

@@ -4,7 +4,15 @@ const Lihamuki = React.createClass({
   },
   render: function() {
     return (
-      <p>Lihamuki React hello</p>
+      <body>
+        <section className="buttons">
+          <div className="button green"></div>
+          <div className="button blue"></div>
+          <div className="button yellow"></div>
+          <div className="button red"></div>
+          <div className="button raw"></div>
+        </section>
+      </body>
     )
   }
 })
