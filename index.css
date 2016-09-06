@@ -1,11 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
   height: 100%;
   display: flex;
   flex-flow: column;
+  text-transform: uppercase;
 }
 
 .buttons {
@@ -17,34 +21,84 @@ html, body {
   width: 20%;
 }
 
-.greenButton {
+.green {
   background-color: #417505;
+  color: white;
 }
 
-.blueButton {
+.blue {
   background-color: #0076FF;
+  color: white;
 }
 
-.yellowButton {
+.yellow {
   background-color: #F8E71C;
 }
 
-.redButton {
+.red {
   background-color: #D0021B;
+  color: white;
+}
+
+.raw {
+  background-color: #D8D8D8;
+}
+
+.total {
+  text-decoration: underline;
 }
 
 .rawButton {
   display: flex;
-  background-color: #D8D8D8;
-  text-transform: uppercase;
   align-items: center;
   justify-content: center;
   font-size: 24px;
   font-weight: 700;
 }
 
-.people {
-  background-color: gray;
+.users {
   flex: 1;
 }
 
+.user {
+  display: flex;
+  flex-direction: row;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 24px;
+  font-size: 30px;
+  font-weight: 700;
+  width: 40%;
+  background-color: #E9FFFA;
+  height: 72px;
+  color: #9B9B9B;
+}
+
+.selected {
+  background-color: #50E3C2;
+  color: white;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 32px;
+  font-size: 30px;
+  font-weight: 700;
+  height: 72px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  width: 48px;
+  margin-right: 8px;
+  border-radius: 4px;
+}
