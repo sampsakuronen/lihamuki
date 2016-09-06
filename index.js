@@ -1,5 +1,7 @@
 const colours = ['green', 'blue', 'yellow', 'red', 'raw']
 
+const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
+
 const users = ['jakub', 'sampsa', 'antti']
 
 const initialState = {}
@@ -15,11 +17,21 @@ initialState.stats = localStorage.getItem('stats') || {
 }
 
 const event$ = Bacon.Bus()
+const userClick$ = event$.filter(e => e.type === 'userClick')
+const buttonClick$ = event$.filter(e => e.type === 'buttonClick')
 
 event$.log('event')
 
 const state$ = Bacon.update(initialState,
-  event$, (state, e) => state
+  userClick$, (state, c) => R.assoc('selectedUser', c.value, state),
+  buttonClick$, (unpatchedState, c) => {
+    const user = unpatchedState.selectedUser
+    const colour = c.value
+    const state = unpatchedState.stats[user] === undefined
+      ? R.assocPath(['stats', user], defaultValues, unpatchedState)
+      : unpatchedState
+    return R.over(R.lensPath(['stats', user, colour]), R.inc, state)
+  }
 )
 
 state$.log('state')
@@ -54,7 +66,7 @@ const User = React.createClass({
       ? R.append((<Stat key='total' colour='total' number={total}/>), statElements)
       : statElements
     return (
-      <div className='user'>
+      <div className='user' onClick={() => this.props.onClick(this.props.user)}>
         <div className={nameClasses}>{'big ' + this.props.user}</div>
         <div className='stats'>
           { statElementsWithTotal }
@@ -73,12 +85,14 @@ const Lihamuki = React.createClass({
   },
   render: function() {
     const pushButtonClick = colour => event$.push({ type: 'buttonClick', value: colour })
+    const userClick = user => event$.push({ type: 'userClick', value: user })
     const toUserElement = user => (
       <User
         key={user}
         user={user}
         selected={user === this.state.selectedUser}
         stats={this.state.stats[user]}
+        onClick={userClick}
       />
     )
     return (
