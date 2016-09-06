@@ -31,13 +31,27 @@ const Button = React.createClass({
   }
 })
 
+const Stat = React.createClass({
+  render: function() {
+    return <div className={ 'stat ' + this.props.colour }>{this.props.number}</div>
+  }
+})
+
 const User = React.createClass({
   render: function() {
     const nameClasses = 'name ' + (this.props.selected ? 'selected' : '')
+    const stats = this.props.stats || {}
+    const total = R.sum(R.values(stats))
     return (
       <div className='user'>
         <div className={nameClasses}>{this.props.user}</div>
         <div className='stats'>
+        { stats.green ? <Stat colour='green' number={stats.green}/> : undefined }
+        { stats.blue ? <Stat colour='blue' number={stats.blue}/> : undefined }
+        { stats.yellow ? <Stat colour='yellow' number={stats.yellow}/> : undefined }
+        { stats.red ? <Stat colour='red' number={stats.red}/> : undefined }
+        { stats.raw ? <Stat colour='raw' number={stats.raw}/> : undefined }
+        { total !== 0 ? <Stat colour='total' number={total}/> : undefined }
         </div>
       </div>
     )
