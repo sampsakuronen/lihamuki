@@ -22,6 +22,18 @@ const Button = React.createClass({
   }
 })
 
+const User = React.createClass({
+  render: function() {
+    return (
+      <div className='user'>
+        <div className='name'>{this.props.user}</div>
+      </div>
+    )
+  }
+})
+
+
+
 const Lihamuki = React.createClass({
   getInitialState: function() {
     return initialState
@@ -39,6 +51,9 @@ const Lihamuki = React.createClass({
           <Button colour='yellow' onClick={pushButtonClick} />
           <Button colour='red' onClick={pushButtonClick} />
           <Button colour='raw' onClick={pushButtonClick} />
+        </section>
+        <section className="users">
+          { R.map(user => <User key={user} user={user}/>, this.props.users) }
         </section>
       </section>
     )
