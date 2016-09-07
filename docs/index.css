@@ -8,6 +8,8 @@ html, body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   font-size: 42px;
+  background: black;
+  color: white;
   text-transform: uppercase;
 }
 
@@ -22,39 +24,40 @@ html, body {
 }
 
 .button {
-  height: 144px;
+  height: 4em;
   width: 20%;
 }
 
 .green {
-  background-color: #417505;
+  background-color: #05C61F;
   color: white;
 }
 
 .blue {
-  background-color: #0076FF;
+  background-color: #41D1EA;
   color: white;
 }
 
 .yellow {
-  background-color: #F8E71C;
+  background-color: #FFD91C;
 }
 
 .red {
-  background-color: #D0021B;
+  background-color: #F71735;
   color: white;
 }
 
 .raw {
-  background-color: #D8D8D8;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  color: black;
+  background-color: #FDFFFC;
 }
 
 .total {
-  font-size: 42px;
+  font-weight: 700;
+  font-size: 1.25em;
 }
 
 .raw.button:before {
@@ -70,19 +73,24 @@ html, body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 16px;
+  padding: 0.5em;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
+@keyframes pulse {
+  50% {
+    background-color: rgba(0,200,200, 0.8)
+  }
+}
 .selected {
-  background-color: #00FFFB;
+  animation: pulse 2.5s ease-in-out infinite;
+  background-color: rgba(0,200,200, 1.0);
 }
 
 .name {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding-left: 24px;
-  font-weight: 700;
   width: 40%;
 }
 
@@ -90,18 +98,15 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding-left: 30px;
-  font-size: 30px;
-  font-weight: 700;
-  height: 72px;
+  font-size: 0.75em;
 }
 
 .stat {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 48px;
-  margin-right: 8px;
-  border-radius: 4px;
-  padding: 0 12px;
+  height: 100%;
+  margin-right: 0.2em;
+  border-radius: 0.2em;
+  padding: 0 0.5em;
 }
