@@ -19,38 +19,42 @@ html, body {
 
 .buttons {
   display: flex;
+  justify-content: space-between;
+  padding: 0 16px 16px 16px;
 }
 
 .button {
   height: 4em;
   width: 20%;
+  border-radius: 8px;
 }
 
 .green {
-  background-color: #05C61F;
+  background-color: #417505;
   color: white;
 }
 
 .blue {
-  background-color: #41D1EA;
+  background-color: #005FCE;
   color: white;
 }
 
 .yellow {
-  background-color: #FFD91C;
+  background-color: #E5D400;
 }
 
 .red {
-  background-color: #F71735;
+  background-color: #DD021D;
   color: white;
 }
 
 .raw {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 12px;
   color: black;
-  background-color: #FDFFFC;
+  background-color: #D8D8D8;
 }
 
 .total {
@@ -71,17 +75,17 @@ html, body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0.5em;
+  padding: 16px;
 }
 
 @keyframes pulse {
   50% {
-    background-color: rgba(0,200,200, 0.8)
+    background-color: rgba(0,230,195, 0.8)
   }
 }
 .selected {
   animation: pulse 2.5s ease-in-out infinite;
-  background-color: rgba(0,200,200, 1.0);
+  background-color: rgba(0,255,216, 1.0);
 }
 
 .name {

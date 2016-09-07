@@ -39,8 +39,13 @@ const state$ = Bacon.update(initialState,
 
 state$.map('.stats').skipDuplicates().onValue(s => localStorage.setItem('stats', JSON.stringify(s)))
 
-const Button = props =>
-  <div className={ 'button ' + props.colour } onClick={() => props.onClick(props.colour)}/>
+const Button = props => {
+  const spacing = 16
+  const width = Math.floor((window.innerWidth-6*spacing)/5)
+  const height = width
+  const style = { width, height }
+  return <div style={style} className={ 'button ' + props.colour } onClick={() => props.onClick(props.colour)}/>
+}
 
 const Stat = props =>
   <div className={ 'stat ' + props.colour }>{props.number}</div>
