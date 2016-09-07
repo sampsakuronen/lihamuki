@@ -7,6 +7,8 @@ const getQueryParam = name => {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+const flippedMap = R.flip(R.map)
+
 const users = (getQueryParam('users') || 'somebody').split(',')
 const colours = ['green', 'blue', 'yellow', 'red', 'raw']
 const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
@@ -19,6 +21,9 @@ const initialState = {
 const event$ = Bacon.Bus()
 const userClick$ = event$.filter(e => e.type === 'userClick')
 const buttonClick$ = event$.filter(e => e.type === 'buttonClick')
+
+const pushButtonClick = colour => event$.push({ type: 'buttonClick', value: colour })
+const userClick = user => event$.push({ type: 'userClick', value: user })
 
 const state$ = Bacon.update(initialState,
   userClick$, (state, c) => R.assoc('selectedUser', c.value, state),
@@ -65,6 +70,8 @@ const User = React.createClass({
   }
 })
 
+const totalByUser = (stats, user) => R.sum(R.values(stats[user]))
+
 const Lihamuki = React.createClass({
   getInitialState: function() {
     return initialState
@@ -73,28 +80,20 @@ const Lihamuki = React.createClass({
     state$.onValue(nextState => this.setState(nextState))
   },
   render: function() {
-    const pushButtonClick = colour => event$.push({ type: 'buttonClick', value: colour })
-    const userClick = user => event$.push({ type: 'userClick', value: user })
-
-    const toUserElement = user => (
-      <User
-        key={user}
-        user={user}
-        selected={user === this.state.selectedUser}
-        stats={this.state.stats[user]}
-        onClick={userClick}
-      />
-    )
-
-    const totalByUser = user => this.state.stats[user]
-      ? R.sum(R.values(this.state.stats[user]))
-      : 0
-
-    const sortedUsers = R.sortBy(u => -totalByUser(u), this.props.users)
-
+    const sortedUsers = R.sortBy(u => -totalByUser(this.state.stats, u), this.props.users)
     return (
       <section className="content">
         <section className="users">
+          { flippedMap(sortedUsers, user => (
+              <User
+                key={user}
+                user={user}
+                selected={user === this.state.selectedUser}
+                stats={this.state.stats[user]}
+                onClick={userClick}
+              />
+            ))
+          }
           { R.map(toUserElement, sortedUsers) }
         </section>
         <section className="buttons">
