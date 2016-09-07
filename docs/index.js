@@ -8,13 +8,13 @@ const getQueryParam = name => {
 }
 
 const users = (getQueryParam('users') || 'somebody').split(',')
-
 const colours = ['green', 'blue', 'yellow', 'red', 'raw']
 const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
 
-const initialState = {}
-initialState.selectedUser = users[0]
-initialState.stats = JSON.parse(localStorage.getItem('stats')) || {}
+const initialState = {
+  selectedUser: users[0]
+  stats: JSON.parse(localStorage.getItem('stats')) || {}
+}
 
 const event$ = Bacon.Bus()
 const userClick$ = event$.filter(e => e.type === 'userClick')
