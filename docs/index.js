@@ -36,7 +36,8 @@ const state$ = Bacon.update(initialState,
 
 state$.map('.stats').skipDuplicates().onValue(s => localStorage.setItem('stats', JSON.stringify(s)))
 
-const Button = props => <div className={ 'button ' + props.colour } onClick={() => props.onClick(props.colour)}/>
+const Button = props =>
+  <div className={ 'button ' + props.colour } onClick={() => props.onClick(props.colour)}/>
 
 const Stat = React.createClass({
   render: function() {
