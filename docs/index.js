@@ -39,11 +39,8 @@ state$.map('.stats').skipDuplicates().onValue(s => localStorage.setItem('stats',
 const Button = props =>
   <div className={ 'button ' + props.colour } onClick={() => props.onClick(props.colour)}/>
 
-const Stat = React.createClass({
-  render: function() {
-    return <div className={ 'stat ' + this.props.colour }>{this.props.number}</div>
-  }
-})
+const Stat = props =>
+  <div className={ 'stat ' + props.colour }>{props.number}</div>
 
 const User = React.createClass({
   render: function() {
