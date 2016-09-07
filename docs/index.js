@@ -87,10 +87,10 @@ const Lihamuki = React.createClass({
     )
 
     const totalByUser = user => this.state.stats[user]
-      ? -R.sum(R.values(this.state.stats[user]))
+      ? R.sum(R.values(this.state.stats[user]))
       : 0
 
-    const sortedUsers = R.sortBy(totalByUser, this.props.users)
+    const sortedUsers = R.sortBy(u => -totalByUser(u), this.props.users)
 
     return (
       <section className="content">
