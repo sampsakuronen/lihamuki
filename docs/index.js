@@ -15,22 +15,29 @@ const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
 
 const initialState = {
   selectedUser: users[0],
-  stats: JSON.parse(localStorage.getItem('stats')) || {}
+  stats: JSON.parse(localStorage.getItem('stats')) || {},
+  recentButtonClickColours: []
 }
 
 const event$ = Bacon.Bus()
 const userClick$ = event$.filter(e => e.type === 'userClick')
 const buttonClick$ = event$.filter(e => e.type === 'buttonClick')
 const statClick$ = event$.filter(e => e.type === 'statClick')
+const buttonClickReset$ = buttonClick$.debounce(3000).map(null)
 
-statClick$.log()
+const recentButtonClicksP = buttonClick$.merge(buttonClickReset$)
+  .scan([], (acc, x) => x ? R.append(x, acc) : [])
+
+const recentButtonClicks$ = recentButtonClicksP.sampledBy(buttonClick$.merge(buttonClickReset$))
 
 const pushButtonClick = colour => event$.push({ type: 'buttonClick', value: colour })
 const userClick = user => event$.push({ type: 'userClick', value: user })
 const statClick = (user, colour) => event$.push({ type: 'statClick', value: { user, colour } })
 
 const state$ = Bacon.update(initialState,
+
   userClick$, (state, c) => R.assoc('selectedUser', c.value, state),
+
   buttonClick$, (unpatchedState, c) => {
     const user = unpatchedState.selectedUser
     const colour = c.value
@@ -39,7 +46,12 @@ const state$ = Bacon.update(initialState,
       : unpatchedState
     return R.over(R.lensPath(['stats', user, colour]), R.inc, state)
   },
-  statClick$, (state, c) => R.over(R.lensPath(['stats', c.value.user, c.value.colour]), R.dec, state)
+
+  statClick$, (state, c) => R.over(R.lensPath(['stats', c.value.user, c.value.colour]), R.dec, state),
+
+  recentButtonClicks$, (state, recentButtonClicks) => {
+    return R.assoc('recentButtonClickColours', R.pluck('value', recentButtonClicks), state)
+  }
 )
 
 state$.map('.stats').skipDuplicates().onValue(s => localStorage.setItem('stats', JSON.stringify(s)))
@@ -49,7 +61,14 @@ const Button = props => {
   const width = Math.floor((window.innerWidth-6*spacing)/5)
   const height = width
   const style = { width, height }
-  return <div style={style} className={ 'button ' + props.colour } onClick={() => props.onClick(props.colour)}/>
+  return (
+    <div
+      style={style}
+      className={ 'button ' + props.colour }
+      onClick={() => props.onClick(props.colour)}>
+      {props.count}
+    </div>
+  )
 }
 
 const Stat = props =>
@@ -111,7 +130,12 @@ const Lihamuki = React.createClass({
         <section className="buttons">
           {
             R.map(c =>
-              <Button key={c} colour={c} onClick={pushButtonClick} />,
+              <Button
+                key={c}
+                colour={c}
+                onClick={pushButtonClick}
+                count={ R.countBy(R.identity, this.state.recentButtonClickColours)[c] }
+              />,
               colours
             )
           }
