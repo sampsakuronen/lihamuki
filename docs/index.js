@@ -83,10 +83,11 @@ const Lihamuki = React.createClass({
         onClick={userClick}
       />
     )
+    const sortedUsers = this.props.users
     return (
       <section className="content">
         <section className="users">
-          { R.map(toUserElement, this.props.users) }
+          { R.map(toUserElement, sortedUsers) }
         </section>
         <section className="buttons">
           { R.map(c => <Button key={c} colour={c} onClick={pushButtonClick} />, colours) }
