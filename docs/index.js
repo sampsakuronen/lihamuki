@@ -7,6 +7,8 @@ const getQueryParam = name => {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+const capitalize = string => string.charAt(0).toUpperCase() + string.substring(1)
+
 const users = (getQueryParam('users') || 'somebody').split(',')
 const colours = ['green', 'blue', 'yellow', 'red', 'raw']
 const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
@@ -59,7 +61,7 @@ const User = React.createClass({
       : statElements
     return (
       <div className={userClasses} onClick={() => this.props.onClick(this.props.user)}>
-        <div className='name'>{'big ' + this.props.user}</div>
+        <div className='name'>{capitalize(this.props.user)}</div>
         <div className='stats'>
           { statElementsWithTotal }
         </div>

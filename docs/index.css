@@ -8,9 +8,7 @@ html, body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   font-size: 24px;
-  background: black;
-  color: white;
-  text-transform: uppercase;
+  color: black;
 }
 
 .content {
@@ -20,7 +18,7 @@ html, body {
 }
 
 .buttons {
-  display: flex
+  display: flex;
 }
 
 .button {
@@ -61,7 +59,7 @@ html, body {
 }
 
 .raw.button:before {
-  content: "raw";
+  content: "Raw";
 }
 
 .users {
@@ -74,7 +72,6 @@ html, body {
   flex-direction: row;
   justify-content: space-between;
   padding: 0.5em;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
 @keyframes pulse {
