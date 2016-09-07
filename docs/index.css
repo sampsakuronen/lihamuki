@@ -69,6 +69,12 @@ html, body {
 .user {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.selected {
+  background-color: #00FFFB;
 }
 
 .name {
@@ -78,14 +84,10 @@ html, body {
   padding-left: 24px;
   font-weight: 700;
   width: 40%;
-  background-color: #E9FFFA;
-  height: 72px;
-  color: #9B9B9B;
 }
 
-.selected {
-  background-color: #50E3C2;
-  color: white;
+.selected > .name {
+  color: white
 }
 
 .stats {

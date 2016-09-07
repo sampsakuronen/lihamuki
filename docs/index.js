@@ -41,7 +41,7 @@ const Stat = React.createClass({
 
 const User = React.createClass({
   render: function() {
-    const nameClasses = 'name ' + (this.props.selected ? 'selected' : '')
+    const userClasses = 'user ' + (this.props.selected ? 'selected' : '')
     const stats = this.props.stats || {}
     const total = R.sum(R.values(stats))
     const toStatElement = c => {
@@ -51,11 +51,11 @@ const User = React.createClass({
     }
     const statElements = R.map(toStatElement, colours)
     const statElementsWithTotal = total !== 0
-      ? R.prepend((<Stat key='total' colour='total' number={total}/>), statElements)
+      ? R.append((<Stat key='total' colour='total' number={total}/>), statElements)
       : statElements
     return (
-      <div className='user' onClick={() => this.props.onClick(this.props.user)}>
-        <div className={nameClasses}>{'big ' + this.props.user}</div>
+      <div className={userClasses} onClick={() => this.props.onClick(this.props.user)}>
+        <div className='name'>{'big ' + this.props.user}</div>
         <div className='stats'>
           { statElementsWithTotal }
         </div>
@@ -74,6 +74,7 @@ const Lihamuki = React.createClass({
   render: function() {
     const pushButtonClick = colour => event$.push({ type: 'buttonClick', value: colour })
     const userClick = user => event$.push({ type: 'userClick', value: user })
+
     const toUserElement = user => (
       <User
         key={user}
@@ -83,7 +84,13 @@ const Lihamuki = React.createClass({
         onClick={userClick}
       />
     )
-    const sortedUsers = this.props.users
+
+    const totalByUser = user => this.state.stats[user] === undefined
+      ? 0
+      : -R.sum(R.values(this.state.stats[user]))
+
+    const sortedUsers = R.sortBy(totalByUser, this.props.users)
+
     return (
       <section className="content">
         <section className="users">
