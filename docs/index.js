@@ -1,4 +1,16 @@
-const users = ['jakub', 'sampsa', 'antti']
+const getQueryParam = name => {
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(window.location.href);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+const usersS = getQueryParam('users') || 'somebody'
+const users = usersS.split(',')
+console.log(users)
+
 const colours = ['green', 'blue', 'yellow', 'red', 'raw']
 const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
 
