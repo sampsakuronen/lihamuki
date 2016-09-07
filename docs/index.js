@@ -21,9 +21,13 @@ const initialState = {
 const event$ = Bacon.Bus()
 const userClick$ = event$.filter(e => e.type === 'userClick')
 const buttonClick$ = event$.filter(e => e.type === 'buttonClick')
+const statClick$ = event$.filter(e => e.type === 'statClick')
+
+statClick$.log()
 
 const pushButtonClick = colour => event$.push({ type: 'buttonClick', value: colour })
 const userClick = user => event$.push({ type: 'userClick', value: user })
+const statClick = (user, colour) => event$.push({ type: 'statClick', value: { user, colour } })
 
 const state$ = Bacon.update(initialState,
   userClick$, (state, c) => R.assoc('selectedUser', c.value, state),
@@ -34,7 +38,8 @@ const state$ = Bacon.update(initialState,
       ? R.assocPath(['stats', user], defaultValues, unpatchedState)
       : unpatchedState
     return R.over(R.lensPath(['stats', user, colour]), R.inc, state)
-  }
+  },
+  statClick$, (state, c) => R.over(R.lensPath(['stats', c.value.user, c.value.colour]), R.dec, state)
 )
 
 state$.map('.stats').skipDuplicates().onValue(s => localStorage.setItem('stats', JSON.stringify(s)))
@@ -48,7 +53,7 @@ const Button = props => {
 }
 
 const Stat = props =>
-  <div className={ 'stat ' + props.colour }>{props.number}</div>
+  <div className={ 'stat ' + props.colour } onClick={props.onClick}>{props.number}</div>
 
 const User = React.createClass({
   render: function() {
@@ -58,7 +63,7 @@ const User = React.createClass({
     const toStatElement = c => {
       return (stats[c] === undefined || stats[c] === 0)
       ? undefined
-      : <Stat key={c} colour={c} number={stats[c]}/>
+      : <Stat key={c} colour={c} number={stats[c]} onClick={() => statClick(this.props.user, c)}/>
     }
     const statElements = R.map(toStatElement, colours)
     const statElementsWithTotal = total !== 0
@@ -97,6 +102,7 @@ const Lihamuki = React.createClass({
                 selected={u === this.state.selectedUser}
                 stats={this.state.stats[u]}
                 onClick={userClick}
+                onStatClick={statClick}
               />,
               sortedUsers
             )
