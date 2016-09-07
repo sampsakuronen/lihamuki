@@ -9,7 +9,6 @@ const getQueryParam = name => {
 
 const usersS = getQueryParam('users') || 'somebody'
 const users = usersS.split(',')
-console.log(users)
 
 const colours = ['green', 'blue', 'yellow', 'red', 'raw']
 const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
