@@ -14,7 +14,7 @@ const colours = ['green', 'blue', 'yellow', 'red', 'raw']
 const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
 
 const initialState = {
-  selectedUser: users[0]
+  selectedUser: users[0],
   stats: JSON.parse(localStorage.getItem('stats')) || {}
 }
 
@@ -84,20 +84,26 @@ const Lihamuki = React.createClass({
     return (
       <section className="content">
         <section className="users">
-          { flippedMap(sortedUsers, user => (
+          {
+            R.map(u =>
               <User
-                key={user}
-                user={user}
-                selected={user === this.state.selectedUser}
-                stats={this.state.stats[user]}
+                key={u}
+                user={u}
+                selected={u === this.state.selectedUser}
+                stats={this.state.stats[u]}
                 onClick={userClick}
-              />
-            ))
+              />,
+              sortedUsers
+            )
           }
-          { R.map(toUserElement, sortedUsers) }
         </section>
         <section className="buttons">
-          { R.map(c => <Button key={c} colour={c} onClick={pushButtonClick} />, colours) }
+          {
+            R.map(c =>
+              <Button key={c} colour={c} onClick={pushButtonClick} />,
+              colours
+            )
+          }
         </section>
       </section>
     )
