@@ -20,7 +20,7 @@ html, body {
 .buttons {
   display: flex;
   justify-content: space-between;
-  padding: 0 16px 16px 16px;
+  padding: 16px;
 }
 
 .button {
