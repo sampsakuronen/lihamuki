@@ -7,8 +7,7 @@ const getQueryParam = name => {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-const usersS = getQueryParam('users') || 'somebody'
-const users = usersS.split(',')
+const users = (getQueryParam('users') || 'somebody').split(',')
 
 const colours = ['green', 'blue', 'yellow', 'red', 'raw']
 const defaultValues = R.fromPairs(R.map(c => [c, 0], colours))
