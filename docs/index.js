@@ -110,6 +110,13 @@ const Lihamuki = React.createClass({
   },
   render: function() {
     const sortedUsers = R.sortBy(u => -totalByUser(this.state.stats, u), this.props.users)
+    const onJoinClick = () => {
+      const dirty = window.prompt("Please enter your name") || ''
+      const name = dirty.trim()
+      const href = window.location.href
+      const nextHref = name === '' ? href : href + ',' + name
+      window.location = nextHref
+    }
     return (
       <section className="content">
         <section className="users">
@@ -126,6 +133,8 @@ const Lihamuki = React.createClass({
               sortedUsers
             )
           }
+          <section className="join" onClick={onJoinClick}
+          >+</section>
         </section>
         <section className="buttons">
           {

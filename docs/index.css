@@ -19,6 +19,18 @@ html, body {
   height: 100%;
 }
 
+.join {
+  padding: 16px;
+  height: 67px;
+}
+
+.ball {
+  border-radius: 100px;
+  background-color: red;
+  padding: 8px;
+  height: 16px;
+}
+
 .buttons {
   display: flex;
   justify-content: space-between;
